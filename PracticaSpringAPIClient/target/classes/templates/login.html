@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Login form</title>
+</head>
+<body>
+	<p th:if="${param.error}">Usuario desconocido o contraseña incorrecta</p>
+	<p th:if="${param.logout}">Desconectado</p>
+
+	<form th:action="@{/login}" method="post">
+		<label>Usuario:</label><input type="text" name="username" /><br />
+		<label>Contraseña:</label><input type="password" name="password" /><br />
+		<input type="submit" value="Entrar" /><br />
+	</form>
+</body>
+</html>

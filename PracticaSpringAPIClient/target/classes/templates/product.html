@@ -1,0 +1,121 @@
+<html xmlns:th="http://www.thymeleaf.org" >
+
+<head>
+
+  <title>Añadir un nuevo producto</title>
+
+  <meta charset="utf-8"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+
+.posicionador{
+width: 50%;
+margin-left:10%;
+}
+
+</style>
+
+<script>
+function sendForm()
+{
+var currDate = new Date();
+document.getElementById("yearLot").value=currDate.getFullYear();
+document.getElementById("monthLot").value=currDate.getMonth() + 1;
+document.getElementById("dayLot").value=currDate.getDate();
+document.getElementById("form1").submit();
+}
+</script>
+
+
+</head>
+
+<body>
+
+<div class="container-fluid" style="margin-top:3%">
+
+<h2 th:if="${#strings.startsWith(flag,'add')}">Descripción del producto a añadir:</h2>
+<h2 th:if="${#strings.startsWith(flag,'edit')}">Descripción del producto a editar:</h2>
+<br/>
+<form th:action="|${flag}CurrProduct|" method="post" id="form1">
+
+  <input type="text" class="form-control posicionador" id="name" name="name"
+  th:attrappend="value=${#strings.startsWith(flag,'edit')}?${product.getName()}"
+  placeholder="Introduzca nombre del producto"></input>
+
+  <br/>
+
+  <input type="number" step="1" class="form-control posicionador" id="price" name="price"
+  th:attrappend="value=${#strings.startsWith(flag,'edit')}?${product.getPrice()}" 
+  placeholder="Precio del producto"></input>
+
+  <br/>
+
+  <input type="text" class="form-control posicionador" id="origin" name="origin"
+  th:attrappend="value=${#strings.startsWith(flag,'edit')}?${product.getOrigin()}"
+  placeholder="País de origen"></input>
+
+  <br/>
+
+   <select name="size" class="form-control posicionador"
+   th:if="${#strings.startsWith(flag,'add')}" >    
+       <option value="Gr">Grande</option>
+       <option value="Med" selected="selected">Mediano</option>
+       <option value="Peq">Pequeño</option>
+   </select>
+   
+   <select name="size" class="form-control posicionador"
+   th:if="${#strings.startsWith(flag,'edit')}" >    
+   
+       <option value="Gr" th:unless="${#strings.startsWith(product.getSize(),'Gr')}">
+         Grande</option>
+       <option value="Gr" selected="selected" th:if="${#strings.startsWith(product.getSize(),'Gr')}">
+         Grande</option>
+       
+       <option value="Med" th:unless="${#strings.startsWith(product.getSize(),'Med')}">
+         Mediano</option>
+       <option value="Med" selected="selected" th:if="${#strings.startsWith(product.getSize(),'Med')}">
+         Mediano</option>
+       
+       <option value="Peq" th:unless="${#strings.startsWith(product.getSize(),'Peq')}">
+         Pequeño</option>
+       <option value="Peq" selected="selected" th:if="${#strings.startsWith(product.getSize(),'Peq')}">
+         Pequeño</option>
+       
+   </select>
+  
+  <input type="number" style="visibility:hidden" id="yearLot" name="yearLot"></input>
+  <input type="number" style="visibility:hidden" id="monthLot" name="monthLot"></input>
+  <input type="number" style="visibility:hidden" id="dayLot" name="dayLot"></input>
+  <input type="number" style="visibility:hidden" id="index" name="id"
+    th:if="${#strings.startsWith(flag,'edit')}" th:value="${productId}"></input>
+
+  <div class= "posicionador">Descripción del producto:</div>
+
+  <textarea rows="8" cols="50" class="form-control posicionador" style="height:30%" id="description" 
+  name="description" th:text="${#strings.startsWith(flag,'edit')}?${product.getDescription()}">
+  </textarea>
+
+  <br/>
+
+<button style="margin-left:10%" onclick="sendForm()">Enviar</button>
+</form>
+</div>
+
+<form th:action="@{/logout}" method="post">
+<input type="submit" value="Desconectarse" />
+</form>
+
+
+</body>
+
+</html>

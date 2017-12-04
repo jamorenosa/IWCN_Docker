@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8"/>
+<style>
+td{
+  margin: 5%;
+}
+</style>
+
+</head>
+
+<body>
+<table border="1">
+  <tr><td colspan="4" style="text-align:center">Listado de Productos</td></tr>
+  <tr th:each="product : ${productList}">
+    <td th:text="${product.getName()}">Nombre del Producto</td>
+    <td><a th:href="@{/showProduct(index=${product.getId()})}">Mostrar</a></td>
+    <td><a th:href="@{/editProduct(index=${product.getId()})}">Editar</a></td>
+    <td><a th:href="@{/deleteProduct(index=${product.getId()})}">Eliminar</a></td>
+    </tr>
+</table>
+<a href="addProduct">Agregar un nuevo producto</a>
+
+<form th:action="@{/logout}" method="post">
+<input type="submit" value="Desconectarse" />
+</form>
+
+</body>
+
+</html>

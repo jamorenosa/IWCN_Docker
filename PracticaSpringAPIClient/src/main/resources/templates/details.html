@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8"/>
+  <title>Name</title>
+
+</head>
+
+<body>
+<h3 th:text="${product.getName()}">Name</h3>
+<p th:text="|Precio: ${product.getPrice()}|">Precio no disponible</p>
+<p th:text="|País de origen: ${product.getOrigin()}|">País de origen no disponible</p>
+<p th:text="|Fecha en que fue añadido: ${product.writeLot()}|">Fecha en que fue añadido no disponible</p>
+<p th:text="|Descripción: ${product.getDescription()}|">Descripción no disponible</p>
+
+<a href="productList">Volver a lista de productos</a>
+
+<form th:action="@{/logout}" method="post">
+<input type="submit" value="Desconectarse" />
+</form>
+
+</body>
+
+</html>
